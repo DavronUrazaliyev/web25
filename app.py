@@ -1,15 +1,30 @@
-from flask import Flask
+from flask import Flask, request
 import telegram
-# Create the application instance
+from telegram import Update
+from telegram.ext import CallbackContext, MessageHandler, Filters, Updater
+
 app = Flask(__name__)
 
-TOKEN ='6440042136:AAGp50G4rRElB42wkDg7DlM91-opDBQwjhc'
-bot = telegram.Bot(TOKEN)
-chat_id = '5271463532'
+# Replace 'YOUR_BOT_TOKEN' with your actual bot token
+TOKEN = '6440042136:AAGp50G4rRElB42wkDg7DlM91-opDBQwjhc'
+bot = telegram.Bot(token=TOKEN)
 
-# route for index page
+def echo(update: Update, context: CallbackContext) -> None:
+    """Echo the user message."""
+    chat_id = update.message.chat_id
+    text = update.message.text
+    bot.send_message(chat_id=chat_id, text=text)  # Fix the syntax error here
+
 @app.route('/', methods=['POST'])
 def index():
-    print('index page')
-    bot.send_message(chat_id=chat_id, text='Hello World!!!')
-    return 'index page'
+    return 'Hello from Flask!'
+
+if __name__ == "__main__":
+    updater = Updater(token=TOKEN, use_context=True)
+    dp = updater.dispatcher
+
+    dp.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
+
+    updater.start_polling()
+    app.run(debug=True)
+    updater.idle()
