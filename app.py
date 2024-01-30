@@ -16,10 +16,13 @@ bot.setWebhook(URL)
 def index():
     print('index page')
     
-    data=request.json()
+    data=request.get_json()
     print(data)
-    chat_id = data.chat_id
-    text = data.text
+    chat_id = data.message.chat_id
+    text = data.message.text
     bot.send_message(chat_id=chat_id, text=text)
-    return 'bot ishlaayapti'
+    return 'bot ishlayapti'
+    
+if __name__ == "__main__":
+    app.run(debug=True, port=7000)
     
