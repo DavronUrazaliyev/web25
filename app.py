@@ -19,12 +19,13 @@ bot.setWebhook(URL)
 @app.route('/', methods=['POST'])
 def index(update: Update, context: CallbackContext):
     print('index page')
-    bot.send_message(chat_id=chat_id, text='Hello World!!!')
-    return 'index page'
     chat_id = update.message.chat_id
     text = update.message.text
-    
     bot.send_message(chat_id=chat_id, text=text)
+    return 'bot ishlayapti'
+    
+    
+    
 
 if __name__ == "__main__":
     updater = Updater(token=TOKEN, use_context=True)
