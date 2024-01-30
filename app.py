@@ -22,7 +22,7 @@ def index(update: Update, context: CallbackContext):
     chat_id = update.message.chat_id
     text = update.message.text
     bot.send_message(chat_id=chat_id, text=text)
-    return 'bot ishlayapti'
+    return 'bot ishlaayapti'
     
     
     
